@@ -35,6 +35,7 @@
 *.xcodeproj
 *.xcworkspace
 *.sln
+*.sln.DotSettings.user
 *.suo
 *.opensdf
 *.sdf
@@ -69,6 +70,14 @@ Saved/*
 # Compiled source files for the engine to use
 Intermediate/*
 Plugins/*/Intermediate/*
+Plugins/Developer/RiderLink/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# User folder
+.idea/
+RawResources/
+
+# Misc unnecessary files
+.DS_Store
