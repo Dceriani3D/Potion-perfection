@@ -7,11 +7,18 @@
 #include "CGSGameMode.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class CGSPECTRUMCOLLAB_API ACGSGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	ACGSGameMode();
+
+protected:
+
+	virtual void BeginPlay() override;
 };
