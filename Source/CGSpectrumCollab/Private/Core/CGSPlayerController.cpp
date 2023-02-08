@@ -2,18 +2,21 @@
 
 #include "Core/CGSPlayerController.h"
 
-#include "Camera/CameraActor.h"
-#include "Kismet/GameplayStatics.h"
-
-ACGSPlayerController::ACGSPlayerController() {}
+ACGSPlayerController::ACGSPlayerController()
+{
+	// Common settings
+	bShowMouseCursor = true;
+	bEnableClickEvents = true;
+}
 
 void ACGSPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AActor* MainCamera = UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass());
-	if (MainCamera)
-	{
-		SetViewTarget(MainCamera);
-	}
+	// Input Mode settings
+	FInputModeGameAndUI InputMode;
+	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+	InputMode.SetHideCursorDuringCapture(false);
+
+	SetInputMode(InputMode);
 }
