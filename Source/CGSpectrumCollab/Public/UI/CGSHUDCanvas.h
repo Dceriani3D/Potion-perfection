@@ -27,7 +27,7 @@ protected:
 	virtual void DrawHUD() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Utilities")
-	virtual void SetMousePosition(FVector2D& Position);
+	FVector2D GetMousePosition();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Player Action HUD")
 	FColor SelectionColor;

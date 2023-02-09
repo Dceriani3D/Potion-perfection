@@ -20,9 +20,3 @@ void ACGSBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-
-// Called to bind functionality to input
-void ACGSBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}

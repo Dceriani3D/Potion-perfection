@@ -7,7 +7,7 @@
 
 void ACGSHUDCanvas::StartSelection()
 {
-	SetMousePosition(MouseStart);
+	MouseStart = GetMousePosition();
 	bIsDrawing = true;
 }
 
@@ -22,16 +22,12 @@ void ACGSHUDCanvas::DrawHUD()
 
 	if (bIsDrawing)
 	{
-		SetMousePosition(MouseEnd);
-		DrawRect(SelectionColor, MouseStart.X, MouseStart.Y, MouseEnd.X, MouseEnd.Y);
+		MouseEnd = GetMousePosition();
+		DrawRect(SelectionColor, MouseStart.X, MouseStart.Y, MouseEnd.X - MouseStart.X, MouseEnd.Y - MouseStart.Y);
 	}
 }
 
-void ACGSHUDCanvas::SetMousePosition(FVector2D& Position)
+FVector2D ACGSHUDCanvas::GetMousePosition()
 {
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	if (PlayerController)
-	{
-		UWidgetLayoutLibrary::GetMousePositionScaledByDPI(PlayerController, Position.X, Position.Y);
-	}
+	return UWidgetLayoutLibrary::GetMousePositionOnViewport(GetWorld()) * UWidgetLayoutLibrary::GetViewportScale(GetWorld());
 }

@@ -15,7 +15,7 @@ void ACGSPlayerController::BeginPlay()
 
 	// Input Mode settings
 	FInputModeGameAndUI InputMode;
-	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+	//InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	InputMode.SetHideCursorDuringCapture(false);
 
 	SetInputMode(InputMode);
