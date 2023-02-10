@@ -2,6 +2,8 @@
 
 #include "Core/CGSPlayerController.h"
 
+#include "Characters/CGSHelperCharacter.h"
+
 ACGSPlayerController::ACGSPlayerController()
 {
 	// Common settings
@@ -15,8 +17,18 @@ void ACGSPlayerController::BeginPlay()
 
 	// Input Mode settings
 	FInputModeGameAndUI InputMode;
-	//InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+	// InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	InputMode.SetHideCursorDuringCapture(false);
 
 	SetInputMode(InputMode);
+}
+
+void ACGSPlayerController::AddHelperToSelection(ACGSHelperCharacter* NewHelper)
+{
+	SelectedHelpers.AddUnique(NewHelper);
+}
+
+void ACGSPlayerController::RemoveHelperFromSelection(ACGSHelperCharacter* HelperToRemove)
+{
+	SelectedHelpers.Remove(HelperToRemove);
 }
