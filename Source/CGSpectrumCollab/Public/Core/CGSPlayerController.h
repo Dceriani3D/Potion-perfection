@@ -22,6 +22,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Player Controller")
 	void RemoveHelperFromSelection(ACGSHelperCharacter* HelperToRemove);
+
+	UFUNCTION(BlueprintCallable, Category = "Player Controller")
+	void ClearHelperSelection();
 	
 protected:
 

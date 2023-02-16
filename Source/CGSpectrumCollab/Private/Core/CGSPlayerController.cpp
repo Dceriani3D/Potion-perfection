@@ -17,7 +17,6 @@ void ACGSPlayerController::BeginPlay()
 
 	// Input Mode settings
 	FInputModeGameAndUI InputMode;
-	// InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	InputMode.SetHideCursorDuringCapture(false);
 
 	SetInputMode(InputMode);
@@ -31,4 +30,16 @@ void ACGSPlayerController::AddHelperToSelection(ACGSHelperCharacter* NewHelper)
 void ACGSPlayerController::RemoveHelperFromSelection(ACGSHelperCharacter* HelperToRemove)
 {
 	SelectedHelpers.Remove(HelperToRemove);
+}
+
+void ACGSPlayerController::ClearHelperSelection()
+{
+	for (const TObjectPtr<ACGSHelperCharacter> Helper : SelectedHelpers)
+	{
+		if (Helper->bIsSelected)
+		{
+			Helper->OnDeSelected();
+		}
+	}
+	SelectedHelpers.Empty();
 }

@@ -18,13 +18,17 @@ public:
 
 	ACGSHelperCharacter();
 
+
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual void OnSelected();
+	
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual void OnDeSelected();
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Helper Character")
 	bool bIsSelected = false;
 
 protected:
 
 	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
-
-	virtual void OnSelected();
-	virtual void OnDeSelected();
 };
