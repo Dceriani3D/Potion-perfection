@@ -25,15 +25,19 @@ void ACGSPlayerController::BeginPlay()
 void ACGSPlayerController::AddHelperToSelection(ACGSHelperCharacter* NewHelper)
 {
 	SelectedHelpers.AddUnique(NewHelper);
+	NewHelper->OnSelected();
 }
 
 void ACGSPlayerController::RemoveHelperFromSelection(ACGSHelperCharacter* HelperToRemove)
 {
 	SelectedHelpers.Remove(HelperToRemove);
+	HelperToRemove->OnDeSelected();
 }
 
 void ACGSPlayerController::ClearHelperSelection()
 {
+	if (SelectedHelpers.Num() == 0) return;
+	
 	for (const TObjectPtr<ACGSHelperCharacter> Helper : SelectedHelpers)
 	{
 		if (Helper->bIsSelected)

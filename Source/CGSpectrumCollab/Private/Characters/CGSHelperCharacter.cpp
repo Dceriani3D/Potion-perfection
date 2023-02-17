@@ -22,13 +22,8 @@ void ACGSHelperCharacter::NotifyActorOnClicked(FKey ButtonPressed)
 
 		if (!bIsSelected)
 		{
+			PlayerController->ClearHelperSelection();
 			PlayerController->AddHelperToSelection(this);
-			OnSelected();
-		}
-		else
-		{
-			PlayerController->RemoveHelperFromSelection(this);
-			OnDeSelected();
 		}
 	}
 }
