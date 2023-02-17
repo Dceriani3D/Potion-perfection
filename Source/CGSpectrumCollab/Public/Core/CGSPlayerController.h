@@ -28,8 +28,15 @@ public:
 	
 protected:
 
-	virtual void BeginPlay() override;
-
 	UPROPERTY(VisibleAnywhere, Category = "Player Controller")
 	TArray<TObjectPtr<ACGSHelperCharacter>> SelectedHelpers;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Player Controller")
+	TEnumAsByte<ETraceTypeQuery> TraceChannel;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Player Controller")
+	FName BlackBoardTargetLocation;
+	
+	virtual void BeginPlay() override;
+	virtual void ProcessPlayerInput(const float DeltaTime, const bool bGamePaused) override;
 };
