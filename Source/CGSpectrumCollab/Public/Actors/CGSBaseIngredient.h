@@ -6,21 +6,35 @@
 #include "GameFramework/Actor.h"
 #include "CGSBaseIngredient.generated.h"
 
+class ACGSPlayerController;
+enum class EHelperAction : uint8;
+
 UCLASS()
 class CGSPECTRUMCOLLAB_API ACGSBaseIngredient : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
+
 	// Sets default values for this actor's properties
 	ACGSBaseIngredient();
 
 protected:
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	TObjectPtr<UStaticMeshComponent> MeshComponent;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
+	TEnumAsByte<EHelperAction> HelperInteractAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
+	float NavigationRadius = 100.0f;
+
+private:
+
+	TObjectPtr<ACGSPlayerController> PlayerController;
 };

@@ -6,9 +6,14 @@
 #include "Characters/CGSBaseCharacter.h"
 #include "CGSHelperCharacter.generated.h"
 
-/**
- *
- */
+UENUM(BlueprintType)
+enum class EHelperAction : uint8
+{
+	Collecting  UMETA(DisplayName = "Collecting Resource"),
+	Hiding      UMETA(DisplayName = "Hiding From Cat"),
+	Waiting     UMETA(DisplayName = "Waiting"),
+};
+
 UCLASS()
 class CGSPECTRUMCOLLAB_API ACGSHelperCharacter : public ACGSBaseCharacter
 {
@@ -18,13 +23,12 @@ public:
 
 	ACGSHelperCharacter();
 
-
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnSelected();
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnDeSelected();
-	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Helper Character")
 	bool bIsSelected = false;
 

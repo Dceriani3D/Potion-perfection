@@ -7,6 +7,7 @@
 #include "CGSPlayerController.generated.h"
 
 class ACGSHelperCharacter;
+enum class EHelperAction : uint8;
 
 UCLASS()
 class CGSPECTRUMCOLLAB_API ACGSPlayerController : public APlayerController
@@ -18,6 +19,12 @@ public:
 	ACGSPlayerController();
 
 	UFUNCTION(BlueprintCallable, Category = "Player Controller")
+	FORCEINLINE TArray<ACGSHelperCharacter*> GetAllSelectedHelpers()
+	{
+		return SelectedHelpers;
+	}
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Controller")
 	void AddHelperToSelection(ACGSHelperCharacter* NewHelper);
 
 	UFUNCTION(BlueprintCallable, Category = "Player Controller")
@@ -25,6 +32,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Player Controller")
 	void ClearHelperSelection();
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Controller")
+	void MoveHelper(ACGSHelperCharacter* Helper, const FVector& TargetLocation);
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Controller")
+	void MoveSelectedHelpers(const FVector& TargetLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Player Controller")
+	void SetHelperAction(ACGSHelperCharacter* Helper, EHelperAction Action);
 	
 protected:
 

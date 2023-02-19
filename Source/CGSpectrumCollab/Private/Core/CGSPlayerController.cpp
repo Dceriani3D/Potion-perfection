@@ -15,6 +15,8 @@ void ACGSPlayerController::BeginPlay()
 	// Common settings
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
+	ClickEventKeys.AddUnique(EKeys::LeftMouseButton);
+	ClickEventKeys.AddUnique(EKeys::RightMouseButton);
 
 	// Input Mode settings
 	FInputModeGameAndUI InputMode;
@@ -33,11 +35,7 @@ void ACGSPlayerController::ProcessPlayerInput(const float DeltaTime, const bool 
 		GetHitResultUnderCursorByChannel(TraceChannel, true, HitResult);
 		if (HitResult.GetActor())
 		{
-			for (TObjectPtr<ACGSHelperCharacter> Helper : SelectedHelpers)
-			{
-				const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
-				Blackboard->SetValueAsVector(BlackBoardTargetLocation, HitResult.ImpactPoint);
-			}
+			MoveSelectedHelpers(HitResult.ImpactPoint);
 		}
 	}
 }
@@ -66,4 +64,24 @@ void ACGSPlayerController::ClearHelperSelection()
 		}
 	}
 	SelectedHelpers.Empty();
+}
+
+void ACGSPlayerController::MoveSelectedHelpers(const FVector& TargetLocation)
+{
+	for (TObjectPtr<ACGSHelperCharacter> Helper : SelectedHelpers)
+	{
+		MoveHelper(Helper, TargetLocation);
+	}
+}
+
+void ACGSPlayerController::MoveHelper(ACGSHelperCharacter* Helper, const FVector& TargetLocation)
+{
+	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
+	Blackboard->SetValueAsVector(BlackBoardTargetLocation, TargetLocation);
+}
+
+void ACGSPlayerController::SetHelperAction(ACGSHelperCharacter* Helper, EHelperAction Action)
+{
+	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
+	Blackboard->SetValueAsEnum("EAction", static_cast<uint8>(Action));
 }
