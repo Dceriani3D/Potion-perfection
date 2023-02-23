@@ -16,13 +16,6 @@ public:
 	// Sets default values for this character's properties
 	ACGSBaseCharacter();
 
-protected:
-
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable, Category = "Character")
+	virtual void HandleReachNavLink(const FVector& Destination) PURE_VIRTUAL(ACGSBaseCharacter::HandleReachNavLink, ;);
 };

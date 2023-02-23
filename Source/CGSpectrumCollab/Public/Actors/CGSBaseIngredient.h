@@ -29,7 +29,7 @@ protected:
 	TObjectPtr<UStaticMeshComponent> MeshComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
-	TEnumAsByte<EHelperAction> HelperInteractAction;
+	EHelperAction HelperInteractAction;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 	float NavigationRadius = 100.0f;

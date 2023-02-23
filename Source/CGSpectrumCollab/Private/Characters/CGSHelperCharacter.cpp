@@ -5,6 +5,8 @@
 #include "Core/CGSPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogACGSHelperCharacter, All, All);
+
 ACGSHelperCharacter::ACGSHelperCharacter() {}
 
 void ACGSHelperCharacter::NotifyActorOnClicked(FKey ButtonPressed)
@@ -41,4 +43,11 @@ void ACGSHelperCharacter::OnDeSelected()
 	this->GetMesh()->bRenderCustomDepth = false;
 	this->GetMesh()->CustomDepthStencilValue = 0;
 	MarkComponentsRenderStateDirty();
+}
+
+void ACGSHelperCharacter::HandleReachNavLink(const FVector& Destination)
+{
+	Super::HandleReachNavLink(Destination);
+
+	UE_LOG(LogACGSHelperCharacter, Display, TEXT("Handle Reach Nav Link: %s"), *Destination.ToString());
 }
