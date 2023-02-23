@@ -16,6 +16,16 @@ public:
 	// Sets default values for this character's properties
 	ACGSBaseCharacter();
 
+	UPROPERTY(EditAnywhere, Category = "Character Movement")
+	float JumpDuration = 2.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Character Movement")
+	float Gravity = 987.0f;
+
 	UFUNCTION(BlueprintCallable, Category = "Character")
-	virtual void HandleReachNavLink(const FVector& Destination) PURE_VIRTUAL(ACGSBaseCharacter::HandleReachNavLink, ;);
+	virtual void HandleReachNavLink(const FVector& Destination);
+
+private:
+
+	FVector CalculateVelocity(const FVector& Start, const FVector& End, const float Duration);
 };
