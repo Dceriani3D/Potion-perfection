@@ -23,8 +23,6 @@ public:
 
 	ACGSHelperCharacter();
 
-	virtual void HandleReachNavLink(const FVector& Destination) override;
-
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnSelected();
 

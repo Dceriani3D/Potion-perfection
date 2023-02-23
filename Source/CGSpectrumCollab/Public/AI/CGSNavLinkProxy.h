@@ -23,8 +23,7 @@ protected:
 	TSubclassOf<ACGSBaseCharacter> CharacterClass;
 
 	UFUNCTION()
-	virtual void PostInitializeComponents() override;
-
-	UFUNCTION()
 	void OnActorReachSmartLink(AActor* MovingActor, const FVector& DestinationPoint);
+	
+	virtual void BeginPlay() override;
 };
