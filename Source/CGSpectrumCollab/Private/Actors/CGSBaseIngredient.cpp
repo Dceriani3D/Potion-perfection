@@ -4,6 +4,8 @@
 
 #include "NavigationSystem.h"
 #include "Characters/CGSHelperCharacter.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/PointLightComponent.h"
 #include "Core/CGSPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -15,10 +17,26 @@ ACGSBaseIngredient::ACGSBaseIngredient()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>("Capsule Component");
+	CapsuleComponent->SetupAttachment(RootComponent);
+
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Mesh Component");
-	MeshComponent->SetupAttachment(RootComponent);
+	MeshComponent->SetupAttachment(CapsuleComponent);
+
+	PointLightComponent = CreateDefaultSubobject<UPointLightComponent>("Point Light Component");
+	PointLightComponent->SetupAttachment(MeshComponent);
 
 	HelperInteractAction = EHelperAction::Collecting;
+}
+
+void ACGSBaseIngredient::TakeIngredient(const float Amount)
+{
+	IngredientTotalAmount -= Amount;
+	if (IngredientTotalAmount <= 0.0f)
+	{
+		bIsDisabled = true;
+		PointLightComponent->SetIntensity(0.0f);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +53,7 @@ void ACGSBaseIngredient::BeginPlay()
 
 void ACGSBaseIngredient::NotifyActorOnClicked(FKey ButtonPressed)
 {
+	if (bIsDisabled) return;
 	Super::NotifyActorOnClicked(ButtonPressed);
 
 	if (ButtonPressed == EKeys::RightMouseButton)
@@ -48,6 +67,7 @@ void ACGSBaseIngredient::NotifyActorOnClicked(FKey ButtonPressed)
 				Navigation->GetRandomPointInNavigableRadius(GetActorLocation(), NavigationRadius, TargetLocation);
 				PlayerController->MoveHelper(Helper, TargetLocation.Location);
 				PlayerController->SetHelperAction(Helper, HelperInteractAction);
+				PlayerController->SetHelperTarget(Helper, this);
 			}
 		}
 		else
@@ -55,4 +75,24 @@ void ACGSBaseIngredient::NotifyActorOnClicked(FKey ButtonPressed)
 			PlayerController->MoveSelectedHelpers(GetActorLocation());
 		}
 	}
+}
+
+void ACGSBaseIngredient::NotifyActorBeginCursorOver()
+{
+	if (bIsDisabled) return;
+	Super::NotifyActorBeginCursorOver();
+
+	MeshComponent->bRenderCustomDepth = true;
+	MeshComponent->CustomDepthStencilValue = 1;
+	MarkComponentsRenderStateDirty();
+}
+
+void ACGSBaseIngredient::NotifyActorEndCursorOver()
+{
+	if (bIsDisabled) return;
+	Super::NotifyActorEndCursorOver();
+
+	MeshComponent->bRenderCustomDepth = false;
+	MeshComponent->CustomDepthStencilValue = 0;
+	MarkComponentsRenderStateDirty();
 }

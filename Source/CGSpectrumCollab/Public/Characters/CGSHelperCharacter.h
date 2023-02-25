@@ -6,9 +6,11 @@
 #include "Characters/CGSBaseCharacter.h"
 #include "CGSHelperCharacter.generated.h"
 
+class ACGSPlayerController;
 UENUM(BlueprintType)
 enum class EHelperAction : uint8
 {
+	None        UMETA(DisplayName = "None"),
 	Collecting  UMETA(DisplayName = "Collecting Resource"),
 	Hiding      UMETA(DisplayName = "Hiding From Cat"),
 	Waiting     UMETA(DisplayName = "Waiting"),
@@ -28,11 +30,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnDeSelected();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Helper Character")
+	int Strength = 2;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Helper Character")
 	bool bIsSelected = false;
 	
 protected:
 
+	virtual void BeginPlay() override;
 	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
+
+private:
+
+	TObjectPtr<ACGSPlayerController> PlayerController;
 };

@@ -26,9 +26,9 @@ void ACGSNavLinkProxy::OnActorReachSmartLink(AActor* MovingActor, const FVector&
 {
 	UE_LOG(LogACGSNavLinkProxy, Display, TEXT("Actor %s reach smart link !!"), *MovingActor->GetName());
 		
-	if (MovingActor->IsA(CharacterClass))
+	ACGSBaseCharacter* Character = Cast<ACGSBaseCharacter>(MovingActor);
+	if (Character)
 	{
-		ACGSBaseCharacter* Character = Cast<ACGSBaseCharacter>(MovingActor);
 		Character->HandleReachNavLink(DestinationPoint);
 	}
 }

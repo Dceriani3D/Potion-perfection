@@ -19,11 +19,8 @@ public:
 
 protected:
 
-	UPROPERTY(EditAnywhere, Category = "AI Settings")
-	TSubclassOf<ACGSBaseCharacter> CharacterClass;
-
 	UFUNCTION()
 	void OnActorReachSmartLink(AActor* MovingActor, const FVector& DestinationPoint);
-	
+
 	virtual void BeginPlay() override;
 };

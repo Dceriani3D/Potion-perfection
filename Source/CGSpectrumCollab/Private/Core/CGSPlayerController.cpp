@@ -2,6 +2,7 @@
 
 #include "Core/CGSPlayerController.h"
 
+#include "Actors/CGSBaseIngredient.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Characters/CGSHelperCharacter.h"
@@ -15,6 +16,7 @@ void ACGSPlayerController::BeginPlay()
 	// Common settings
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
+	bEnableMouseOverEvents = true;
 	ClickEventKeys.AddUnique(EKeys::LeftMouseButton);
 	ClickEventKeys.AddUnique(EKeys::RightMouseButton);
 
@@ -84,4 +86,10 @@ void ACGSPlayerController::SetHelperAction(ACGSHelperCharacter* Helper, EHelperA
 {
 	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
 	Blackboard->SetValueAsEnum("EAction", static_cast<uint8>(Action));
+}
+
+void ACGSPlayerController::SetHelperTarget(ACGSHelperCharacter* Helper, ACGSBaseIngredient* TargetIngredient)
+{
+	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
+	Blackboard->SetValueAsObject("TargetIngredient", TargetIngredient);
 }

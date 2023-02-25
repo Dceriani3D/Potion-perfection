@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "CGSBaseIngredient.generated.h"
 
+class UPointLightComponent;
+class UCapsuleComponent;
 class ACGSPlayerController;
 enum class EHelperAction : uint8;
 
@@ -18,23 +20,43 @@ public:
 
 	// Sets default values for this actor's properties
 	ACGSBaseIngredient();
+	
+	UFUNCTION(BlueprintCallable, Category = "Ingredient")
+	FORCEINLINE bool IsDisabled() const
+	{
+		return bIsDisabled;
+	}
 
 protected:
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<UCapsuleComponent> CapsuleComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> MeshComponent;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	TObjectPtr<UPointLightComponent> PointLightComponent;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 	EHelperAction HelperInteractAction;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 	float NavigationRadius = 100.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Ingredient")
+	float IngredientTotalAmount = 100.0f;
+
+	UFUNCTION(BlueprintCallable, Category = "Ingredient")
+	void TakeIngredient(float Amount);
+
+	virtual void BeginPlay() override;
+	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
+	virtual void NotifyActorBeginCursorOver() override;
+	virtual void NotifyActorEndCursorOver() override;
 
 private:
 
 	TObjectPtr<ACGSPlayerController> PlayerController;
+	bool bIsDisabled = false;
 };

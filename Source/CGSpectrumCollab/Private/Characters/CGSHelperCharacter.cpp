@@ -9,19 +9,26 @@ DEFINE_LOG_CATEGORY_STATIC(LogACGSHelperCharacter, All, All);
 
 ACGSHelperCharacter::ACGSHelperCharacter() {}
 
+void ACGSHelperCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	PlayerController = Cast<ACGSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (!PlayerController)
+	{
+		UE_LOG(LogACGSHelperCharacter, Fatal, TEXT("The PlayerController needs to be a ACGSPlayerController class !!"));
+		return;
+	}
+
+	PlayerController->SetHelperAction(this, EHelperAction::None);
+}
+
 void ACGSHelperCharacter::NotifyActorOnClicked(FKey ButtonPressed)
 {
 	Super::NotifyActorOnClicked(ButtonPressed);
 
 	if (ButtonPressed == EKeys::LeftMouseButton)
 	{
-		ACGSPlayerController* PlayerController = Cast<ACGSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-		if (!PlayerController)
-		{
-			UE_LOG(LogTemp, Error, TEXT("The PlayerController needs to be a ACGSPlayerController class !!"));
-			return;
-		}
-
 		PlayerController->ClearHelperSelection();
 		PlayerController->AddHelperToSelection(this);
 	}

@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "CGSPlayerController.generated.h"
 
+class ACGSBaseIngredient;
 class ACGSHelperCharacter;
 enum class EHelperAction : uint8;
 
@@ -41,6 +42,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Player Controller")
 	void SetHelperAction(ACGSHelperCharacter* Helper, EHelperAction Action);
+	
+	UFUNCTION(BlueprintCallable, Category = "Player Controller")
+	void SetHelperTarget(ACGSHelperCharacter* Helper, ACGSBaseIngredient* TargetIngredient);
 	
 protected:
 
