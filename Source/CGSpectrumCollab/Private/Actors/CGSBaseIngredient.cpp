@@ -31,8 +31,8 @@ ACGSBaseIngredient::ACGSBaseIngredient()
 
 void ACGSBaseIngredient::TakeIngredient(const float Amount)
 {
-	IngredientTotalAmount -= Amount;
-	if (IngredientTotalAmount <= 0.0f)
+	CurrentDurability -= Amount;
+	if (CurrentDurability <= 0.0f)
 	{
 		bIsDisabled = true;
 		PointLightComponent->SetIntensity(0.0f);
@@ -48,7 +48,10 @@ void ACGSBaseIngredient::BeginPlay()
 	if (!PlayerController)
 	{
 		UE_LOG(LogCGSBaseIngredient, Fatal, TEXT("Cannot find ACGSPlayerController class !"));
+		return;
 	}
+
+	CurrentDurability = GetIngredientMaxAmount();
 }
 
 void ACGSBaseIngredient::NotifyActorOnClicked(FKey ButtonPressed)

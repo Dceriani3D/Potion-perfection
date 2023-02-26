@@ -27,6 +27,12 @@ public:
 		return bIsDisabled;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "Ingredient")
+	FORCEINLINE float GetIngredientMaxAmount() const
+	{
+		return IngredientLevel * IngredientLevel * IngredientBaseAmount + IngredientBaseAmount;
+	}
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -45,7 +51,10 @@ protected:
 	float NavigationRadius = 100.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ingredient")
-	float IngredientTotalAmount = 100.0f;
+	float IngredientBaseAmount = 30.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Ingredient")
+	int IngredientLevel = 1;
 
 	UFUNCTION(BlueprintCallable, Category = "Ingredient")
 	void TakeIngredient(float Amount);
@@ -59,4 +68,5 @@ private:
 
 	TObjectPtr<ACGSPlayerController> PlayerController;
 	bool bIsDisabled = false;
+	float CurrentDurability = FLT_MIN;
 };

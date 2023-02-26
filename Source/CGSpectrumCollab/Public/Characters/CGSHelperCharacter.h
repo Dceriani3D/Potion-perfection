@@ -26,19 +26,28 @@ public:
 	ACGSHelperCharacter();
 
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	FORCEINLINE int GetStrength()
+	{
+		return Level * Strength + 1;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnSelected();
 
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnDeSelected();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Helper Character")
-	int Strength = 2;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Helper Character")
 	bool bIsSelected = false;
 	
 protected:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Helper Character")
+	int Level = 1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Helper Character")
+	int Strength = 2;
+	
 	virtual void BeginPlay() override;
 	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
 
