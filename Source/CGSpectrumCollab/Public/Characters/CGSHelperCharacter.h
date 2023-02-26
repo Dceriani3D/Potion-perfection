@@ -32,6 +32,9 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual bool IncreaseLevel();
+	
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnSelected();
 
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")

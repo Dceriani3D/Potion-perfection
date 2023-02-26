@@ -2,9 +2,18 @@
 
 #include "Core/CGSAIController.h"
 
+#include "Kismet/GameplayStatics.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogACGSAIController, All, All);
+
 void ACGSAIController::BeginPlay()
 {
 	Super::BeginPlay();
-
 	RunBehaviorTree(BehaviorTree);
+
+	Cauldron = UGameplayStatics::GetActorOfClass(GetWorld(), CauldronClass);
+	if (!Cauldron)
+	{
+		UE_LOG(LogACGSAIController, Fatal, TEXT("Cannot find Cauldron !!"));
+	}
 }

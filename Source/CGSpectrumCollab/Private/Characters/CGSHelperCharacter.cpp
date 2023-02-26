@@ -34,6 +34,17 @@ void ACGSHelperCharacter::NotifyActorOnClicked(FKey ButtonPressed)
 	}
 }
 
+bool ACGSHelperCharacter::IncreaseLevel()
+{
+	if (Level < 4)
+	{
+		Level++;
+		return true;
+	}
+
+	return false;
+}
+
 void ACGSHelperCharacter::OnSelected()
 {
 	bIsSelected = true;
