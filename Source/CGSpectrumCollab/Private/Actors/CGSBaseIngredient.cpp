@@ -6,6 +6,7 @@
 #include "Characters/CGSHelperCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/PointLightComponent.h"
+#include "Core/CGSConditionSubsystem.h"
 #include "Core/CGSPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -52,6 +53,11 @@ void ACGSBaseIngredient::BeginPlay()
 	}
 
 	CurrentDurability = GetIngredientMaxAmount();
+	UCGSConditionSubsystem* ConditionSubsystem = GetWorld()->GetSubsystem<UCGSConditionSubsystem>();
+	if (ConditionSubsystem)
+	{
+		ConditionSubsystem->AddNewCondition(this, NeededQuantity);
+	}
 }
 
 void ACGSBaseIngredient::NotifyActorOnClicked(FKey ButtonPressed)

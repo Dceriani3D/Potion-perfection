@@ -2,12 +2,19 @@
 
 #include "Core/CGSConditionSubsystem.h"
 
+void UCGSConditionSubsystem::AddNewCondition(ACGSBaseIngredient* Ingredient, const int NeededAmount)
+{
+	Conditions.AddUnique(FGameCondition(Ingredient, NeededAmount));
+}
+
 void UCGSConditionSubsystem::AddIngredient(ACGSBaseIngredient* Ingredient)
 {
 	for (FGameCondition GameCondition : Conditions)
 	{
-		if (GameCondition.Ingredient->GetClass() != Ingredient->GetClass())
+		if (GameCondition.Ingredient != Ingredient)
+		{
 			continue;
+		}
 
 		GameCondition.CurrentAmount++;
 		break;

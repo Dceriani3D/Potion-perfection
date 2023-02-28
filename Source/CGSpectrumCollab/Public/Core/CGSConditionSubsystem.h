@@ -14,12 +14,20 @@ struct FGameCondition
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Condition")
 	TObjectPtr<ACGSBaseIngredient> Ingredient = nullptr;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Condition")
 	int NeededAmount = 0;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Condition")
 	int CurrentAmount = 0;
+
+	FGameCondition() {}
+	FGameCondition(ACGSBaseIngredient* Ingredient, const int NeededAmount) : Ingredient(Ingredient), NeededAmount(NeededAmount) {}
+
+	bool operator== (const FGameCondition& Other) const 
+	{
+		return Ingredient == Other.Ingredient && NeededAmount == Other.NeededAmount && CurrentAmount == Other.CurrentAmount;
+	}
 };
 
 UCLASS()
@@ -31,6 +39,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Condition")
 	TArray<FGameCondition> Conditions;
+
+	UFUNCTION(BlueprintCallable, Category = "Game Condition")
+	void AddNewCondition(ACGSBaseIngredient* Ingredient, const int NeededAmount);
 
 	UFUNCTION(BlueprintCallable, Category = "Game Condition")
 	void AddIngredient(ACGSBaseIngredient* Ingredient);

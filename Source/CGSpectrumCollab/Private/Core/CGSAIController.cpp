@@ -14,6 +14,6 @@ void ACGSAIController::BeginPlay()
 	Cauldron = UGameplayStatics::GetActorOfClass(GetWorld(), CauldronClass);
 	if (!Cauldron)
 	{
-		UE_LOG(LogACGSAIController, Fatal, TEXT("Cannot find Cauldron !!"));
+		UE_LOG(LogACGSAIController, Error, TEXT("Cannot find Cauldron !!"));
 	}
 }

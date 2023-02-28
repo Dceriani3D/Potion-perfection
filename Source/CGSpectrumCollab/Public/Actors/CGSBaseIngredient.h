@@ -55,6 +55,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = "Ingredient")
 	int IngredientLevel = 1;
+	
+	UPROPERTY(EditAnywhere, Category = "Ingredient")
+	int NeededQuantity = 1;
 
 	UFUNCTION(BlueprintCallable, Category = "Ingredient")
 	void TakeIngredient(float Amount);
