@@ -79,17 +79,26 @@ void ACGSPlayerController::MoveSelectedHelpers(const FVector& TargetLocation)
 void ACGSPlayerController::MoveHelper(ACGSHelperCharacter* Helper, const FVector& TargetLocation)
 {
 	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
-	Blackboard->SetValueAsVector(BlackBoardTargetLocation, TargetLocation);
+	if (Blackboard)
+	{
+		Blackboard->SetValueAsVector(BlackBoardTargetLocation, TargetLocation);
+	}
 }
 
 void ACGSPlayerController::SetHelperAction(ACGSHelperCharacter* Helper, EHelperAction Action)
 {
 	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
-	Blackboard->SetValueAsEnum("EAction", static_cast<uint8>(Action));
+	if (Blackboard)
+	{
+		Blackboard->SetValueAsEnum("EAction", static_cast<uint8>(Action));
+	}
 }
 
 void ACGSPlayerController::SetHelperTarget(ACGSHelperCharacter* Helper, ACGSBaseIngredient* TargetIngredient)
 {
 	const TObjectPtr<UBlackboardComponent> Blackboard = UAIBlueprintHelperLibrary::GetBlackboard(Helper);
-	Blackboard->SetValueAsObject("TargetIngredient", TargetIngredient);
+	if (Blackboard)
+	{
+		Blackboard->SetValueAsObject("TargetIngredient", TargetIngredient);
+	}
 }

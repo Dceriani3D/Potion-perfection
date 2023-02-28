@@ -2,6 +2,7 @@
 
 #include "Core/CGSAIController.h"
 
+#include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogACGSAIController, All, All);
