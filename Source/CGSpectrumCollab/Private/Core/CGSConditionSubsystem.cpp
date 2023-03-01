@@ -11,7 +11,7 @@ void UCGSConditionSubsystem::AddIngredient(ACGSBaseIngredient* Ingredient)
 {
 	for (FGameCondition GameCondition : Conditions)
 	{
-		if (GameCondition.Ingredient != Ingredient)
+		if (GameCondition.Ingredient->GetOwner() != Ingredient->GetOwner())
 		{
 			continue;
 		}

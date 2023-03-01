@@ -7,6 +7,8 @@
 #include "CGSHelperCharacter.generated.h"
 
 class ACGSPlayerController;
+class ACGSBaseIngredient;
+
 UENUM(BlueprintType)
 enum class EHelperAction : uint8
 {
@@ -40,6 +42,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Helper Character")
 	virtual void OnDeSelected();
 	
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual void SpawnBag();
+
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual void AddCurrentIngredientToCollection();
+	
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual void SetCurrentIngredient(ACGSBaseIngredient* Ingredient);
+
+	UFUNCTION(BlueprintCallable, Category = "Helper Character")
+	virtual ACGSBaseIngredient* GetCurrentIngredient();
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Helper Character")
 	bool bIsSelected = false;
 	
@@ -51,6 +65,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Helper Character")
 	int Strength = 2;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Helper Character")
+	ACGSBaseIngredient* CurrentIngredient = nullptr;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Helper Character")
+	TSubclassOf<AActor> BagClass;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Helper Character")
+	FName BagSocketName = "BagSocket";
+
 	virtual void BeginPlay() override;
 	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
 

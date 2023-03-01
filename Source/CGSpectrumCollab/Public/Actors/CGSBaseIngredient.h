@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "CGSBaseIngredient.generated.h"
 
+class ACGSHelperCharacter;
 class UPointLightComponent;
 class UCapsuleComponent;
 class ACGSPlayerController;
@@ -33,6 +34,12 @@ public:
 		return IngredientLevel * IngredientLevel * IngredientBaseAmount + IngredientBaseAmount;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "Ingredient")
+	FORCEINLINE UTexture2D* GetIngredientIcon() const
+	{
+		return IngredientTexture;
+	}
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -51,6 +58,9 @@ protected:
 	float NavigationRadius = 100.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ingredient")
+	TObjectPtr<UTexture2D> IngredientTexture;
+	
+	UPROPERTY(EditAnywhere, Category = "Ingredient")
 	float IngredientBaseAmount = 30.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ingredient")
@@ -60,7 +70,7 @@ protected:
 	int NeededQuantity = 1;
 
 	UFUNCTION(BlueprintCallable, Category = "Ingredient")
-	void TakeIngredient(float Amount);
+	void TakeIngredient(float Amount, ACGSHelperCharacter* Worker);
 
 	virtual void BeginPlay() override;
 	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;

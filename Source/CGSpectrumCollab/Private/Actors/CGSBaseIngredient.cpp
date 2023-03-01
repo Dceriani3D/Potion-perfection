@@ -30,13 +30,16 @@ ACGSBaseIngredient::ACGSBaseIngredient()
 	HelperInteractAction = EHelperAction::Collecting;
 }
 
-void ACGSBaseIngredient::TakeIngredient(const float Amount)
+void ACGSBaseIngredient::TakeIngredient(const float Amount, ACGSHelperCharacter* Worker)
 {
 	CurrentDurability -= Amount;
 	if (CurrentDurability <= 0.0f)
 	{
 		bIsDisabled = true;
 		PointLightComponent->SetIntensity(0.0f);
+
+		Worker->SetCurrentIngredient(this);
+		Worker->SpawnBag();
 	}
 }
 

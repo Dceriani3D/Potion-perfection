@@ -6,6 +6,8 @@
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Core/CGSPlayerController.h"
+#include "Actors/CGSBaseIngredient.h"
+#include "Core/CGSConditionSubsystem.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogACGSHelperCharacter, All, All);
 
@@ -63,4 +65,33 @@ void ACGSHelperCharacter::OnDeSelected()
 	this->GetMesh()->bRenderCustomDepth = false;
 	this->GetMesh()->CustomDepthStencilValue = 0;
 	MarkComponentsRenderStateDirty();
+}
+
+void ACGSHelperCharacter::SpawnBag()
+{
+	AActor* Bag = GetWorld()->SpawnActor<AActor>(BagClass);
+	
+	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+	Bag->AttachToComponent(this->GetMesh(), AttachmentRules, BagSocketName);
+}
+
+void ACGSHelperCharacter::AddCurrentIngredientToCollection()
+{
+	if (CurrentIngredient == nullptr) return;
+
+	UCGSConditionSubsystem* ConditionSubsystem = GetWorld()->GetSubsystem<UCGSConditionSubsystem>();
+	if (ConditionSubsystem)
+	{
+		ConditionSubsystem->AddIngredient(CurrentIngredient);
+	}
+}
+
+void ACGSHelperCharacter::SetCurrentIngredient(ACGSBaseIngredient* Ingredient)
+{
+	CurrentIngredient = Ingredient;
+}
+
+ACGSBaseIngredient* ACGSHelperCharacter::GetCurrentIngredient()
+{
+	return CurrentIngredient;
 }
